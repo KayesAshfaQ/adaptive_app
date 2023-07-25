@@ -4,9 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:googleapis/youtube/v3.dart';
 import 'package:http/http.dart' as http;
 
-class FlutterDevPlaylist extends ChangeNotifier {
-  
-  FlutterDevPlaylist({
+class FlutterDevPlaylists extends ChangeNotifier {
+  final String _flutterDevAccountId;
+  late final YouTubeApi _api;
+
+  final List<Playlist> _playlists = [];
+
+  List<Playlist> get playlists => UnmodifiableListView(_playlists);
+
+  final Map<String, List<PlaylistItem>> _playlistItems = {};
+
+  FlutterDevPlaylists({
     required String flutterDevAccountId,
     required String youtubeApiKey,
   }) : _flutterDevAccountId = flutterDevAccountId {
@@ -39,13 +47,6 @@ class FlutterDevPlaylist extends ChangeNotifier {
     } while (nextPageToken != null);
   }
 
-  final String _flutterDevAccountId;
-  late final YouTubeApi _api;
-
-  final List<Playlist> _playlists = [];
-  List<Playlist> get playlists => UnmodifiableListView(_playlists);
-
-  final Map<String, List<PlaylistItem>> _playlistItems = {};
   List<PlaylistItem> playlistItems({required String playlistId}) {
     if (!_playlistItems.containsKey(playlistId)) {
       _playlistItems[playlistId] = [];
@@ -81,10 +82,14 @@ class _ApiKeyClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
+    print('original url::: ${request.url}');
+
     final url = request.url.replace(queryParameters: <String, List<String>>{
       ...request.url.queryParametersAll,
       'key': [key]
     });
+
+    print('modified url::: $url');
 
     return client.send(http.Request(request.method, url));
   }
