@@ -16,12 +16,12 @@ class FlutterDevPlaylists extends ChangeNotifier {
 
   FlutterDevPlaylists({
     required String flutterDevAccountId,
-    required String youtubeApiKey,
+    required String youTubeApiKey,
   }) : _flutterDevAccountId = flutterDevAccountId {
     _api = YouTubeApi(
       _ApiKeyClient(
         client: http.Client(),
-        key: youtubeApiKey,
+        key: youTubeApiKey,
       ),
     );
     _loadPlayLists();

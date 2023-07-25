@@ -6,11 +6,11 @@ import 'package:url_launcher/link.dart';
 
 import 'app_state.dart';
 
-class PlayListDetails extends StatelessWidget {
+class PlaylistDetails extends StatelessWidget {
   final String playlistId;
   final String playlistName;
 
-  const PlayListDetails({
+  const PlaylistDetails({
     super.key,
     required this.playlistId,
     required this.playlistName,
@@ -46,26 +46,29 @@ class _PlaylistDetailsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) {
-      final playlistItem = playlistItems[index];
+    return ListView.builder(
+      itemCount: playlistItems.length,
+      itemBuilder: (context, index) {
+        final playlistItem = playlistItems[index];
 
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (playlistItem.snippet!.thumbnails!.high != null)
-                Image.network(playlistItem.snippet!.thumbnails!.high!.url!),
-              _buildGradient(context),
-              _buildTitleAndSubtitle(context, playlistItem),
-              _buildPlayButton(context, playlistItem),
-            ],
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (playlistItem.snippet!.thumbnails!.high != null)
+                  Image.network(playlistItem.snippet!.thumbnails!.high!.url!),
+                _buildGradient(context),
+                _buildTitleAndSubtitle(context, playlistItem),
+                _buildPlayButton(context, playlistItem),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _buildGradient(BuildContext context) {
