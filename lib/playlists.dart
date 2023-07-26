@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:googleapis/youtube/v3.dart';
@@ -34,23 +35,27 @@ class Playlists extends StatelessWidget {
 class _PlaylistsListView extends StatelessWidget {
   final List<Playlist> items;
 
-  const _PlaylistsListView({super.key, required this.items});
+  const _PlaylistsListView({Key? key, required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        var playlist = items[index];
+        final playlist = items[index];
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
             leading: Image.network(
               playlist.snippet!.thumbnails!.default_!.url!,
             ),
-            title: Text(playlist.snippet!.title!),
+            title: Text(
+              playlist.snippet!.title!,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             subtitle: Text(
               playlist.snippet!.description!,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             onTap: () {
               context.go(

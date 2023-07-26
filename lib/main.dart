@@ -30,9 +30,6 @@ final _router = GoRouter(
             final title = state.uri.queryParameters['title'];
             final id = state.pathParameters['id']!;
 
-            print('title::: ${title}');
-            print('ID::: $id');
-
             return PlaylistDetails(
               playlistId: id,
               playlistName: title ?? 'Playlist Name',
@@ -50,13 +47,15 @@ void main() {
     exit(1);
   }
 
-  runApp(ChangeNotifierProvider<FlutterDevPlaylists>(
-    create: (context) => FlutterDevPlaylists(
-      flutterDevAccountId: flutterDevAccountId,
-      youTubeApiKey: youTubeApiKey,
+  runApp(
+    ChangeNotifierProvider<FlutterDevPlaylists>(
+      create: (context) => FlutterDevPlaylists(
+        flutterDevAccountId: flutterDevAccountId,
+        youTubeApiKey: youTubeApiKey,
+      ),
+      child: const PlaylistsApp(),
     ),
-    child: const PlaylistsApp(),
-  ));
+  );
 }
 
 class PlaylistsApp extends StatelessWidget {
@@ -74,7 +73,7 @@ class PlaylistsApp extends StatelessWidget {
         scheme: FlexScheme.red,
         useMaterial3: true,
       ).toTheme,
-      themeMode: ThemeMode.dark, // Or ThemeMode.System if you'd prefer
+      themeMode: ThemeMode.light, // Or ThemeMode.System if you'd prefer
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
     );
