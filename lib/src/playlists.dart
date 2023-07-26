@@ -1,21 +1,20 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:googleapis/youtube/v3.dart';
 import 'package:provider/provider.dart';
 
+import 'adaptive_image.dart'; // Add this line
 import 'app_state.dart';
 
 class Playlists extends StatelessWidget {
-  final PlaylistsListSelected playlistSelected;
-
   const Playlists({super.key, required this.playlistSelected});
+
+  final PlaylistsListSelected playlistSelected;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<FlutterDevPlaylists>(
       builder: (context, flutterDev, child) {
         final playlists = flutterDev.playlists;
-
         if (playlists.isEmpty) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -34,14 +33,13 @@ class Playlists extends StatelessWidget {
 typedef PlaylistsListSelected = void Function(Playlist playlist);
 
 class _PlaylistsListView extends StatefulWidget {
-  final List<Playlist> items;
-  final PlaylistsListSelected playlistSelected;
-
   const _PlaylistsListView({
-    Key? key,
     required this.items,
     required this.playlistSelected,
-  }) : super(key: key);
+  });
+
+  final List<Playlist> items;
+  final PlaylistsListSelected playlistSelected;
 
   @override
   State<_PlaylistsListView> createState() => _PlaylistsListViewState();
@@ -68,20 +66,17 @@ class _PlaylistsListViewState extends State<_PlaylistsListView> {
       controller: _scrollController,
       itemCount: widget.items.length,
       itemBuilder: (context, index) {
-        final playlist = widget.items[index];
+        var playlist = widget.items[index];
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
-            leading: Image.network(
+            leading: AdaptiveImage.network(
+              // Change this one.
               playlist.snippet!.thumbnails!.default_!.url!,
             ),
-            title: Text(
-              playlist.snippet!.title!,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            title: Text(playlist.snippet!.title!),
             subtitle: Text(
               playlist.snippet!.description!,
-              style: Theme.of(context).textTheme.bodySmall,
             ),
             onTap: () {
               widget.playlistSelected(playlist);
