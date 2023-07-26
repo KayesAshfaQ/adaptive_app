@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'app_state.dart';
-import 'playlist_details.dart';
-import 'playlists.dart';
-import 'screens/resizable_screen.dart';
+import 'src/app_state.dart';
+import 'src/playlist_details.dart';
+import 'src/playlists.dart';
+import 'src/resizable_screen.dart';
 
 // From https://www.youtube.com/channel/UCwXdFgeE9KYzlDdR7TG9cMw
 const flutterDevAccountId = 'UCwXdFgeE9KYzlDdR7TG9cMw';
