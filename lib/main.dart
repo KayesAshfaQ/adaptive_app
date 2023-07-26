@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'src/adaptive_playlist.dart';
 import 'src/app_state.dart';
 import 'src/playlist_details.dart';
-import 'src/playlists.dart';
-import 'src/resizable_screen.dart';
 
 // From https://www.youtube.com/channel/UCwXdFgeE9KYzlDdR7TG9cMw
 const flutterDevAccountId = 'UCwXdFgeE9KYzlDdR7TG9cMw';
@@ -21,7 +20,7 @@ final _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) {
-        return const Playlists();
+        return const AdaptivePlaylists();
       },
       routes: <RouteBase>[
         GoRoute(

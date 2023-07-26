@@ -1,48 +1,74 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:googleapis/youtube/v3.dart';
 import 'package:provider/provider.dart';
 
 import 'app_state.dart';
 
 class Playlists extends StatelessWidget {
-  const Playlists({super.key});
+  final PlaylistsListSelected playlistSelected;
+
+  const Playlists({super.key, required this.playlistSelected});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FlutterDev Playlists'),
-      ),
-      body: Consumer<FlutterDevPlaylists>(
-        builder: (context, flutterDev, child) {
-          final playlists = flutterDev.playlists;
+    return Consumer<FlutterDevPlaylists>(
+      builder: (context, flutterDev, child) {
+        final playlists = flutterDev.playlists;
 
-          if (playlists.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        if (playlists.isEmpty) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-          return _PlaylistsListView(items: playlists);
-        },
-      ),
+        return _PlaylistsListView(
+          items: playlists,
+          playlistSelected: playlistSelected,
+        );
+      },
     );
   }
 }
 
-class _PlaylistsListView extends StatelessWidget {
-  final List<Playlist> items;
+typedef PlaylistsListSelected = void Function(Playlist playlist);
 
-  const _PlaylistsListView({Key? key, required this.items}) : super(key: key);
+class _PlaylistsListView extends StatefulWidget {
+  final List<Playlist> items;
+  final PlaylistsListSelected playlistSelected;
+
+  const _PlaylistsListView({
+    Key? key,
+    required this.items,
+    required this.playlistSelected,
+  }) : super(key: key);
+
+  @override
+  State<_PlaylistsListView> createState() => _PlaylistsListViewState();
+}
+
+class _PlaylistsListViewState extends State<_PlaylistsListView> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: items.length,
+      controller: _scrollController,
+      itemCount: widget.items.length,
       itemBuilder: (context, index) {
-        final playlist = items[index];
+        final playlist = widget.items[index];
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
@@ -58,14 +84,7 @@ class _PlaylistsListView extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             onTap: () {
-              context.go(
-                Uri(
-                  path: '/playlist/${playlist.id}',
-                  queryParameters: <String, String>{
-                    'title': playlist.snippet!.title!
-                  },
-                ).toString(),
-              );
+              widget.playlistSelected(playlist);
             },
           ),
         );
