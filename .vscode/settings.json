@@ -1,10 +1,3 @@
 {
-<<<<<<< HEAD
-    "cSpell.words": [
-        "googleapis"
-    ]
-    // "dart.flutterSdkPath": "/Users/imac/Tools/flutter_3.10.1-stable"
-=======
-     "dart.flutterSdkPath": "/Users/imac/Tools/flutter_3.10.1-stable"
->>>>>>> ef05d1811fda409538f9927ff0b4d38964efcb8a
+    //"dart.flutterSdkPath": "/Users/imac/Tools/flutter_3.10.1-stable"
 }
