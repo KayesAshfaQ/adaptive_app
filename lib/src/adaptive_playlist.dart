@@ -86,8 +86,11 @@ class _WideDisplayPlaylistsState extends State<WideDisplayPlaylists> {
             });
           }),
           switch ((selectedPlaylist?.id, selectedPlaylist?.snippet?.title)) {
-            (String id, String title) =>
-              PlaylistDetails(playlistId: id, playlistName: title),
+            (String id, String title) => PlaylistDetails(
+                playlistId: id,
+                playlistName: title,
+                isSplitView: true,
+              ),
             _ => const Center(child: Text('Select a playlist')),
           },
         ],

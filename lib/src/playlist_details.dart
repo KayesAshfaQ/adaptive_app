@@ -8,14 +8,20 @@ import 'adaptive_text.dart'; // and this line
 import 'app_state.dart';
 
 class PlaylistDetails extends StatelessWidget {
-  const PlaylistDetails(
-      {required this.playlistId, required this.playlistName, super.key});
   final String playlistId;
   final String playlistName;
+  final bool isSplitView;
+
+  const PlaylistDetails({
+    super.key,
+    required this.playlistId,
+    required this.playlistName,
+    this.isSplitView = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FlutterDevPlaylists>(
+    final hold = Consumer<FlutterDevPlaylists>(
       builder: (context, playlists, _) {
         final playlistItems = playlists.playlistItems(playlistId: playlistId);
         if (playlistItems.isEmpty) {
@@ -25,12 +31,22 @@ class PlaylistDetails extends StatelessWidget {
         return _PlaylistDetailsListView(playlistItems: playlistItems);
       },
     );
+
+    return isSplitView
+        ? hold
+        : Scaffold(
+            appBar: AppBar(
+              title: Text(playlistName),
+            ),
+            body: hold,
+          );
   }
 }
 
 class _PlaylistDetailsListView extends StatefulWidget {
-  const _PlaylistDetailsListView({required this.playlistItems});
   final List<PlaylistItem> playlistItems;
+
+  const _PlaylistDetailsListView({required this.playlistItems});
 
   @override
   State<_PlaylistDetailsListView> createState() =>
@@ -85,7 +101,10 @@ class _PlaylistDetailsListViewState extends State<_PlaylistDetailsListView> {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.transparent, Theme.of(context).colorScheme.background,],
+            colors: [
+              Colors.transparent,
+              Theme.of(context).colorScheme.background,
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: const [0.5, 0.95],
@@ -109,7 +128,8 @@ class _PlaylistDetailsListViewState extends State<_PlaylistDetailsListView> {
             // This line
             playlistItem.snippet!.title!,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontSize: 18,color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onBackground,
                   fontWeight: FontWeight.bold,
                 ),
           ),

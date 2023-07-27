@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 import 'adaptive_image.dart'; // Add this line
 import 'app_state.dart';
 
-class Playlists extends StatelessWidget {
-  const Playlists({super.key, required this.playlistSelected});
+typedef PlaylistsListSelected = void Function(Playlist playlist);
 
+class Playlists extends StatelessWidget {
   final PlaylistsListSelected playlistSelected;
+
+  const Playlists({super.key, required this.playlistSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +32,14 @@ class Playlists extends StatelessWidget {
   }
 }
 
-typedef PlaylistsListSelected = void Function(Playlist playlist);
-
 class _PlaylistsListView extends StatefulWidget {
+  final List<Playlist> items;
+  final PlaylistsListSelected playlistSelected;
+
   const _PlaylistsListView({
     required this.items,
     required this.playlistSelected,
   });
-
-  final List<Playlist> items;
-  final PlaylistsListSelected playlistSelected;
 
   @override
   State<_PlaylistsListView> createState() => _PlaylistsListViewState();
@@ -77,6 +77,8 @@ class _PlaylistsListViewState extends State<_PlaylistsListView> {
             title: Text(playlist.snippet!.title!),
             subtitle: Text(
               playlist.snippet!.description!,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
             onTap: () {
               widget.playlistSelected(playlist);
