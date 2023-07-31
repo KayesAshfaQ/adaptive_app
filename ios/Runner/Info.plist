@@ -55,5 +55,13 @@
 			<string>tel</string>
 			<string>mailto</string>
 		</array>
+		<key>CLIENT_ID</key>
+		<string>555913620808-bnsmvpmc311e7bk8rduu7rjg1kmii3qe.apps.googleusercontent.com</string>
+		<key>REVERSED_CLIENT_ID</key>
+		<string>com.googleusercontent.apps.555913620808-bnsmvpmc311e7bk8rduu7rjg1kmii3qe</string>
+		<key>PLIST_VERSION</key>
+		<string>1</string>
+		<key>BUNDLE_ID</key>
+		<string>com.example.adaptive_app</string>
 	</dict>
 </plist>
