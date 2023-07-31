@@ -27,21 +27,14 @@ class AdaptivePlaylists extends StatelessWidget {
 }
 
 class NarrowDisplayPlaylists extends StatelessWidget {
-  final bool isAppBarVisible;
-
-  const NarrowDisplayPlaylists({
-    Key? key,
-    this.isAppBarVisible = true,
-  }) : super(key: key);
+  const NarrowDisplayPlaylists({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: isAppBarVisible
-          ? AppBar(
-              title: const Text('FlutterDev Playlist'),
-            )
-          : null,
+      appBar: AppBar(
+        title: const Text('FlutterDev Playlist'),
+      ),
       body: Playlists(
         playlistSelected: (playlist) {
           context.go(

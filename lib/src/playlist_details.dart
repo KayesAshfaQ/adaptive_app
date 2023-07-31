@@ -21,7 +21,7 @@ class PlaylistDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hold = Consumer<AuthedUserPlaylists>(
+    return Consumer<AuthedUserPlaylists>(
       builder: (context, playlists, _) {
         final playlistItems = playlists.playlistItems(playlistId: playlistId);
         if (playlistItems.isEmpty) {
@@ -31,15 +31,6 @@ class PlaylistDetails extends StatelessWidget {
         return _PlaylistDetailsListView(playlistItems: playlistItems);
       },
     );
-
-    return isSplitView
-        ? hold
-        : Scaffold(
-            appBar: AppBar(
-              title: Text(playlistName),
-            ),
-            body: hold,
-          );
   }
 }
 
